@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div class="container mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-4">Create Job</h1>
+    <form id="createJobForm" onsubmit="createJob(event) class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="profile">
+                Profile
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="profile" type="text" placeholder="DevOps Engineer">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="desc">
+                Description
+            </label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="desc" placeholder="DevOps Engineer: Streamlining software development through automation, collaboration, and continuous integration/continuous deployment (CI/CD) practices."></textarea>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="exp">
+                Experience (years)
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exp" type="number" placeholder="2">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="techs">
+                Technologies
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="techs" type="text" placeholder="e.g., Ansible, Docker, Postman">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="locations">
+                Locations
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="locations" type="text" placeholder="e.g., Bangalore">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="noOfOpenings">
+                Number of Openings
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noOfOpenings" type="number" placeholder="1">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="contactEmail">
+                Contact Email
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="contactEmail" type="email" placeholder="hr@apple.com">
+        </div>
+        <div class="flex items-center justify-between">
+            <button id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                Create Job
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript -->
+<script>
+    document.getElementById("submitBtn").addEventListener("click", function() {
+        // Collect form data
+        const profile = document.getElementById("profile").value;
+        const desc = document.getElementById("desc").value;
+        const exp = parseInt(document.getElementById("exp").value);
+        const techs = document.getElementById("techs").value.split(',').map(tech => tech.trim());
+        const locations = document.getElementById("locations").value.split(',').map(location => location.trim());
+        const noOfOpenings = parseInt(document.getElementById("noOfOpenings").value);
+        const contactEmail = document.getElementById("contactEmail").value;
+
+        // Create job object
+        const job = {
+            profile,
+            desc,
+            exp,
+            techs,
+            locations,
+            noOfOpenings,
+            contactEmail
+        };
+
+        // Send data to backend
+        fetch('/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(job),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle successful response
+            console.log('Success:', data);
+            // You can redirect or show a success message here
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+            // You can show an error message here
+        });
+    });
+</script>
+</body>
+</html>

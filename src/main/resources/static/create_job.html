@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Job</title>
+    <title>Meera Jobs - Create</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100">
 <div class="container mx-auto py-8">
     <h1 class="text-2xl font-bold mb-4">Create Job</h1>
@@ -25,7 +26,7 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="exp">
-                Experience (years)
+                Experience (min years)
             </label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="exp" type="number" placeholder="2">
         </div>
@@ -33,13 +34,13 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="techs">
                 Technologies
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="techs" type="text" placeholder="e.g., Ansible, Docker, Postman">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="techs" type="text" placeholder="e.g., Ansible, Docker, Postman (comma separated)">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="locations">
                 Locations
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="locations" type="text" placeholder="e.g., Bangalore">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="locations" type="text" placeholder="e.g., Bangalore, Pune (comma separated)">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="noOfOpenings">
@@ -51,13 +52,17 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="contactEmail">
                 Contact Email
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="contactEmail" type="email" placeholder="hr@apple.com">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="contactEmail" type="email" placeholder="recruite@meerajobs.com">
         </div>
-        <div class="flex items-center justify-between">
-            <button id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+        <div class="flex items-center justify-center">
+            <button id="submitBtn" onclick="reloadPage()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 focus:outline-none focus:shadow-outline" type="button">
                 Create Job
             </button>
+            <button onclick="goBack()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                Go back
+            </button>
         </div>
+
     </form>
 </div>
 
@@ -72,6 +77,10 @@
         const locations = document.getElementById("locations").value.split(',').map(location => location.trim());
         const noOfOpenings = parseInt(document.getElementById("noOfOpenings").value);
         const contactEmail = document.getElementById("contactEmail").value;
+        const now = new Date();
+        const currentDateTime = now.toISOString().slice(0, 16); // Format: YYYY-MM-DDTHH:MM
+        const postedDate = currentDateTime;
+
 
         // Check if any of the required fields are empty
         if (!profile || !desc || !exp || !techs || !locations || !noOfOpenings || !contactEmail) {
@@ -87,7 +96,8 @@
             techs,
             locations,
             noOfOpenings,
-            contactEmail
+            contactEmail,
+            postedDate
         };
 
         // Send data to backend
@@ -121,5 +131,10 @@
         });
     });
 </script>
+<script>
+    function reloadPage() {location.reload();}
+    function goBack() {window.location.href = 'admin_dashboard.html';}
+</script>
+
 </body>
 </html>

@@ -33,7 +33,10 @@ public class PostController {
 
     @PostMapping()
     public Post createPost(@RequestBody Post post) {
-        return postRepo.save(post);
+
+        Post postx =  postRepo.save(post);
+        System.out.println("saved " + postx.get_id());
+        return postx;
     }
 
     @CrossOrigin

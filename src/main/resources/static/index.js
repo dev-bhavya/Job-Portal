@@ -46,19 +46,26 @@ function displayJobs(jobs) {
         const postElement = document.createElement('div');
         postElement.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md', 'max-h-300', 'overflow-hidden');
 
+        // Limit description to 65 characters
+        const truncatedDesc = job.desc.length > 85 ? job.desc.slice(0, 85) + '...' : job.desc;
+
         // Construct HTML for each job post
         postElement.innerHTML = `
             <h3 class="text-lg font-semibold mb-2 text-blue-700">${job.profile}</h3>
-            <p class="text-gray-600">${job.desc}</p>
-            <p class="text-gray-600">Technologies: ${job.techs.join(', ')}</p>
             <p class="text-gray-500 mt-2">Experience: ${job.exp} years</p>
+            <p class="text-gray-600">${truncatedDesc}</p>
             <button onclick="openModal('${job.profile}', '${job.desc}', '${job.techs.join(', ')}', '${job.exp}', '${job.location}', '${job.openings}', '${job.contactEmail}', '${new Date(job.postedDate).toLocaleString()}')" class="btn-details text-blue-500">View Details</button>
+            <div class="flex flex-wrap mt-2">
+                ${job.techs.map(tech => `<span class="bg-gray-200 rounded-lg px-2 py-1 text-sm text-gray-700 mr-2 mb-2">${tech}</span>`).join('')}
+            </div>
+
         `;
 
         // Append job post element to the container
         jobPostsContainer.appendChild(postElement);
     });
 }
+
 
 
 
@@ -95,3 +102,4 @@ function goToCreateJob() {
 
 // Fetch all jobs when page loads
 document.addEventListener('DOMContentLoaded', fetchJobs);
+

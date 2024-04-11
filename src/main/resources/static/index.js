@@ -103,3 +103,12 @@ function goToCreateJob() {
 // Fetch all jobs when page loads
 document.addEventListener('DOMContentLoaded', fetchJobs);
 
+
+document.getElementById('loginButton').addEventListener('click', async () => {
+    try {
+        window.location.href = '/login';
+    } catch (error) {
+        console.error('Error logging in:', error);
+    }
+});
+

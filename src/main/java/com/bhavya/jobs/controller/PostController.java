@@ -45,4 +45,9 @@ public class PostController {
         System.out.println("Wants to delete: " + id);
         postRepo.deleteById(id);
     }
+
+    @GetMapping("/admin-dashboard")
+    public String getAdminDashboard() {
+        return "admin_dashboard.html";
+    }
 }
